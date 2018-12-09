@@ -4,6 +4,7 @@
   "description": "A Udemy project using webpack, babel, and vanilla js.",
   "main": "server.js",
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "hbs": "^4.0.1"

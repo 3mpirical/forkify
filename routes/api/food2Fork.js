@@ -24,7 +24,7 @@ router.get("/api/search-food/:food", (req, res) => {
                 .json({
                     isSuccessful: true,
                     responseText: "query completed",
-                    data: foodData.data,
+                    data: foodData.data.recipes,
                 });
         }
     })

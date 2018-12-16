@@ -8,7 +8,11 @@ const MDL = (function() {
 
             axios.get(url)
             .then((searchData) => {
-                resolve(searchData.data);
+                if(!searchData || searchData.data.isSuccessful === false) {
+                    reject(searchData);
+                } else {
+                    resolve(searchData.data);
+                }
             })
             .catch((err) => {
                 reject(err);

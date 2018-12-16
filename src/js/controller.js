@@ -13,10 +13,10 @@ const CTRL = (function() {
 } () );
 
 
-MDL.forkifySearch("burger")
+MDL.forkifySearch("54634235 364vkjbg")
     .then((searchData) => {
-        console.log(searchData);
+        console.log(`resolved: ${JSON.stringify(searchData, null, 2)}`);
     })
     .catch((err) => {
-        console.log(err);
+        console.log(`rejected: ${JSON.stringify(err, null, 2)}`);
     });

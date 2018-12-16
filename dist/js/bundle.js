@@ -4156,31 +4156,67 @@ eval("var g;\n\n// This works in non-strict mode\ng = (function() {\n\treturn th
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _view__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./view */ \"./src/js/view.js\");\n/* harmony import */ var _model__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./model */ \"./src/js/model.js\");\n// Global app controller\n\n\n\nvar CTRL = function () {\n  return {};\n}();\n\n_model__WEBPACK_IMPORTED_MODULE_1__[\"MDL\"].forkifySearch(\"54634235 364vkjbg\").then(function (searchData) {\n  console.log(\"resolved: \".concat(JSON.stringify(searchData, null, 2)));\n}).catch(function (err) {\n  console.log(\"rejected: \".concat(JSON.stringify(err, null, 2)));\n});\n\n//# sourceURL=webpack:///./src/js/controller.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _views_view_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./views/view.js */ \"./src/js/views/view.js\");\n/* harmony import */ var _models_model_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./models/model.js */ \"./src/js/models/model.js\");\n/* harmony import */ var _elements_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./elements.js */ \"./src/js/elements.js\");\n// Global app controller\n\n\n\n\nvar CTRL = function () {\n  var getRecipes = function getRecipes(query) {\n    //prepare UI for results\n    //execute search\n    return _models_model_js__WEBPACK_IMPORTED_MODULE_1__[\"MDL\"].search.getResults(query); //render results to ui\n  };\n\n  return {\n    getRecipes: getRecipes\n  };\n}();\n\n_elements_js__WEBPACK_IMPORTED_MODULE_2__[\"elements\"].searchForm.addEventListener(\"submit\", function (event) {\n  event.preventDefault();\n  console.log(_elements_js__WEBPACK_IMPORTED_MODULE_2__[\"elements\"].searchInput.value);\n  CTRL.getRecipes(_elements_js__WEBPACK_IMPORTED_MODULE_2__[\"elements\"].searchInput.value).then(function (recipeData) {\n    console.log(recipeData);\n  }).catch(function (err) {\n    console.log(err);\n  });\n});\n\n//# sourceURL=webpack:///./src/js/controller.js?");
 
 /***/ }),
 
-/***/ "./src/js/model.js":
-/*!*************************!*\
-  !*** ./src/js/model.js ***!
-  \*************************/
+/***/ "./src/js/elements.js":
+/*!****************************!*\
+  !*** ./src/js/elements.js ***!
+  \****************************/
+/*! exports provided: elements */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"elements\", function() { return elements; });\nvar elements = {\n  searchForm: document.querySelector(\".search\"),\n  searchInput: document.querySelector(\".search__field\")\n};\n\n\n//# sourceURL=webpack:///./src/js/elements.js?");
+
+/***/ }),
+
+/***/ "./src/js/models/model.js":
+/*!********************************!*\
+  !*** ./src/js/models/model.js ***!
+  \********************************/
 /*! exports provided: MDL */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"MDL\", function() { return MDL; });\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ \"./node_modules/axios/index.js\");\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);\n\n\nvar MDL = function () {\n  var forkifySearch = function forkifySearch(searchParam) {\n    return new Promise(function (resolve, reject) {\n      var url = \"/api/search-food/\".concat(searchParam);\n      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(url).then(function (searchData) {\n        if (!searchData || searchData.data.isSuccessful === false) {\n          reject(searchData);\n        } else {\n          resolve(searchData.data);\n        }\n      }).catch(function (err) {\n        reject(err);\n      });\n    });\n  };\n\n  return {\n    forkifySearch: forkifySearch\n  };\n}();\n\n\n\n//# sourceURL=webpack:///./src/js/model.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"MDL\", function() { return MDL; });\n/* harmony import */ var _search_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./search.js */ \"./src/js/models/search.js\");\n/* harmony import */ var _state_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./state.js */ \"./src/js/models/state.js\");\n\n\nvar MDL = {\n  state: _state_js__WEBPACK_IMPORTED_MODULE_1__[\"state\"],\n  search: _search_js__WEBPACK_IMPORTED_MODULE_0__[\"search\"]\n};\n\n\n//# sourceURL=webpack:///./src/js/models/model.js?");
 
 /***/ }),
 
-/***/ "./src/js/view.js":
-/*!************************!*\
-  !*** ./src/js/view.js ***!
-  \************************/
-/*! exports provided: helloWorldAlert, greetingQuestion */
+/***/ "./src/js/models/search.js":
+/*!*********************************!*\
+  !*** ./src/js/models/search.js ***!
+  \*********************************/
+/*! exports provided: search */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"helloWorldAlert\", function() { return helloWorldAlert; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"greetingQuestion\", function() { return greetingQuestion; });\nvar helloWorldAlert = function helloWorldAlert() {\n  return alert(\"Hello World!\");\n};\n\nvar greetingQuestion = function greetingQuestion() {\n  return prompt(\"How was your day?\");\n};\n\n\n\n//# sourceURL=webpack:///./src/js/view.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"search\", function() { return search; });\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ \"./node_modules/axios/index.js\");\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);\n\n\nvar search = function () {\n  var getResults = function getResults(searchParam) {\n    return new Promise(function (resolve, reject) {\n      var url = \"/api/search-food/\".concat(searchParam);\n      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(url).then(function (searchData) {\n        if (!searchData || searchData.data.isSuccessful === false) {\n          reject(searchData);\n        } else {\n          resolve(searchData.data);\n        }\n      }).catch(function (err) {\n        reject(err);\n      });\n    });\n  };\n\n  return {\n    getResults: getResults\n  };\n}();\n\n\n\n//# sourceURL=webpack:///./src/js/models/search.js?");
+
+/***/ }),
+
+/***/ "./src/js/models/state.js":
+/*!********************************!*\
+  !*** ./src/js/models/state.js ***!
+  \********************************/
+/*! exports provided: state */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"state\", function() { return state; });\nvar state = {};\n\n\n//# sourceURL=webpack:///./src/js/models/state.js?");
+
+/***/ }),
+
+/***/ "./src/js/views/view.js":
+/*!******************************!*\
+  !*** ./src/js/views/view.js ***!
+  \******************************/
+/*! exports provided: VIEW */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"VIEW\", function() { return VIEW; });\nvar VIEW = {};\n\n\n//# sourceURL=webpack:///./src/js/views/view.js?");
 
 /***/ }),
 

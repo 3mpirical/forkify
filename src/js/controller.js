@@ -1,22 +1,39 @@
 // Global app controller
 
-import {helloWorldAlert, greetingQuestion} from "./view";
-import { MDL } from "./model";
+import { VIEW } from "./views/view.js";
+import { MDL } from "./models/model.js";
+import { elements } from "./elements.js";
 
 
 const CTRL = (function() {
 
+    const getRecipes = (query) => {
+
+        //prepare UI for results
+
+        //execute search
+        return MDL.search.getResults(query);
+
+        //render results to ui
+    };
+
+
 
     return {
-
+        getRecipes,
     };
 } () );
 
 
-MDL.forkifySearch("54634235 364vkjbg")
-    .then((searchData) => {
-        console.log(`resolved: ${JSON.stringify(searchData, null, 2)}`);
+
+elements.searchForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    console.log(elements.searchInput.value);
+    CTRL.getRecipes(elements.searchInput.value)
+    .then((recipeData) => {
+        console.log(recipeData);
     })
     .catch((err) => {
-        console.log(`rejected: ${JSON.stringify(err, null, 2)}`);
+        console.log(err);
     });
+});

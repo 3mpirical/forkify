@@ -1,0 +1,9 @@
+
+
+
+const VIEW = {
+
+};
+
+
+export {VIEW};

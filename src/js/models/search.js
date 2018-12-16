@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const MDL = (function() {
+const search = (function() {
 
-    const forkifySearch = (searchParam) => {
+    const getResults = (searchParam) => {
         return new Promise((resolve,reject) => {
             const url = `/api/search-food/${searchParam}`;
 
@@ -24,14 +24,10 @@ const MDL = (function() {
 
 
     return {
-        forkifySearch,
+        getResults,
     };
 
 } () );
 
 
-
-
-
-
-export { MDL };
+export { search };

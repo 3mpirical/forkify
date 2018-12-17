@@ -4156,7 +4156,7 @@ eval("var g;\n\n// This works in non-strict mode\ng = (function() {\n\treturn th
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _views_view_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./views/view.js */ \"./src/js/views/view.js\");\n/* harmony import */ var _models_model_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./models/model.js */ \"./src/js/models/model.js\");\n/* harmony import */ var _elements_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./elements.js */ \"./src/js/elements.js\");\n// Global app controller\n\n\n\nvar state = _models_model_js__WEBPACK_IMPORTED_MODULE_1__[\"MDL\"].state;\n\nvar CTRL = function () {\n  var getRecipesAndRender = function getRecipesAndRender() {\n    return new Promise(function (resolve, reject) {\n      //prepare UI for results\n      //execute search\n      //render results to ui\n      state.currentSearch = _elements_js__WEBPACK_IMPORTED_MODULE_2__[\"elements\"].searchInput.value; // console.log(state.currentSearch); //log search\n\n      _models_model_js__WEBPACK_IMPORTED_MODULE_1__[\"MDL\"].search.getResults(state.currentSearch).then(function (recipeData) {\n        // console.log(recipeData.data);//log results\n        state.recipeArray = recipeData.data;\n        _views_view_js__WEBPACK_IMPORTED_MODULE_0__[\"VIEW\"].clearResults();\n        _views_view_js__WEBPACK_IMPORTED_MODULE_0__[\"VIEW\"].renderResults();\n        _views_view_js__WEBPACK_IMPORTED_MODULE_0__[\"VIEW\"].clearInput();\n      }).catch(function (err) {\n        console.log(err);\n      });\n    });\n  };\n\n  return {\n    getRecipesAndRender: getRecipesAndRender\n  };\n}();\n\n_elements_js__WEBPACK_IMPORTED_MODULE_2__[\"elements\"].searchForm.addEventListener(\"submit\", function (event) {\n  event.preventDefault();\n  CTRL.getRecipesAndRender().then(function () {}).catch(function (err) {\n    console.log(err);\n  });\n});\n\n//# sourceURL=webpack:///./src/js/controller.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _views_view_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./views/view.js */ \"./src/js/views/view.js\");\n/* harmony import */ var _models_model_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./models/model.js */ \"./src/js/models/model.js\");\n/* harmony import */ var _elements_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./elements.js */ \"./src/js/elements.js\");\n/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./state */ \"./src/js/state.js\");\n// Global app controller\n\n\n\n\n\nvar CTRL = function () {\n  var getRecipesAndRender = function getRecipesAndRender() {\n    return new Promise(function (resolve, reject) {\n      _state__WEBPACK_IMPORTED_MODULE_3__[\"state\"].currentSearch = _elements_js__WEBPACK_IMPORTED_MODULE_2__[\"elements\"].searchInput.value;\n      _views_view_js__WEBPACK_IMPORTED_MODULE_0__[\"VIEW\"].renderLoader(_elements_js__WEBPACK_IMPORTED_MODULE_2__[\"elements\"].searchResList);\n      _models_model_js__WEBPACK_IMPORTED_MODULE_1__[\"MDL\"].getResults(_state__WEBPACK_IMPORTED_MODULE_3__[\"state\"].currentSearch).then(function (recipeData) {\n        _state__WEBPACK_IMPORTED_MODULE_3__[\"state\"].recipeArray = recipeData.data;\n        _views_view_js__WEBPACK_IMPORTED_MODULE_0__[\"VIEW\"].clearResults();\n        _views_view_js__WEBPACK_IMPORTED_MODULE_0__[\"VIEW\"].renderResults();\n        _views_view_js__WEBPACK_IMPORTED_MODULE_0__[\"VIEW\"].clearInput();\n      }).catch(function (err) {\n        console.log(err);\n      });\n    });\n  };\n\n  return {\n    getRecipesAndRender: getRecipesAndRender\n  };\n}();\n\n_elements_js__WEBPACK_IMPORTED_MODULE_2__[\"elements\"].searchForm.addEventListener(\"submit\", function (event) {\n  event.preventDefault();\n  CTRL.getRecipesAndRender().then(function () {}).catch(function (err) {\n    console.log(err);\n  });\n});\n\n//# sourceURL=webpack:///./src/js/controller.js?");
 
 /***/ }),
 
@@ -4172,6 +4172,18 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 
 /***/ }),
 
+/***/ "./src/js/models/_searchModel.js":
+/*!***************************************!*\
+  !*** ./src/js/models/_searchModel.js ***!
+  \***************************************/
+/*! exports provided: searchModel */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"searchModel\", function() { return searchModel; });\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ \"./node_modules/axios/index.js\");\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);\n\n\nvar searchModel = function () {\n  var getResults = function getResults(searchParam) {\n    return new Promise(function (resolve, reject) {\n      var url = \"/api/search-food/\".concat(searchParam);\n      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(url).then(function (searchData) {\n        if (!searchData || searchData.data.isSuccessful === false) {\n          reject(searchData);\n        } else {\n          resolve(searchData.data);\n        }\n      }).catch(function (err) {\n        reject(err);\n      });\n    });\n  };\n\n  return {\n    getResults: getResults\n  };\n}();\n\n\n\n//# sourceURL=webpack:///./src/js/models/_searchModel.js?");
+
+/***/ }),
+
 /***/ "./src/js/models/model.js":
 /*!********************************!*\
   !*** ./src/js/models/model.js ***!
@@ -4180,31 +4192,43 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"MDL\", function() { return MDL; });\n/* harmony import */ var _search_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./search.js */ \"./src/js/models/search.js\");\n/* harmony import */ var _state_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./state.js */ \"./src/js/models/state.js\");\n\n\nvar MDL = {\n  state: _state_js__WEBPACK_IMPORTED_MODULE_1__[\"state\"],\n  search: _search_js__WEBPACK_IMPORTED_MODULE_0__[\"search\"]\n};\n\n\n//# sourceURL=webpack:///./src/js/models/model.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"MDL\", function() { return MDL; });\n/* harmony import */ var _searchModel_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_searchModel.js */ \"./src/js/models/_searchModel.js\");\nfunction _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }\n\nfunction _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }\n\n\n\nvar MDL = _objectSpread({}, _searchModel_js__WEBPACK_IMPORTED_MODULE_0__[\"searchModel\"]);\n\n\n\n//# sourceURL=webpack:///./src/js/models/model.js?");
 
 /***/ }),
 
-/***/ "./src/js/models/search.js":
-/*!*********************************!*\
-  !*** ./src/js/models/search.js ***!
-  \*********************************/
-/*! exports provided: search */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"search\", function() { return search; });\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ \"./node_modules/axios/index.js\");\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);\n\n\nvar search = function () {\n  var getResults = function getResults(searchParam) {\n    return new Promise(function (resolve, reject) {\n      var url = \"/api/search-food/\".concat(searchParam);\n      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(url).then(function (searchData) {\n        if (!searchData || searchData.data.isSuccessful === false) {\n          reject(searchData);\n        } else {\n          resolve(searchData.data);\n        }\n      }).catch(function (err) {\n        reject(err);\n      });\n    });\n  };\n\n  return {\n    getResults: getResults\n  };\n}();\n\n\n\n//# sourceURL=webpack:///./src/js/models/search.js?");
-
-/***/ }),
-
-/***/ "./src/js/models/state.js":
-/*!********************************!*\
-  !*** ./src/js/models/state.js ***!
-  \********************************/
+/***/ "./src/js/state.js":
+/*!*************************!*\
+  !*** ./src/js/state.js ***!
+  \*************************/
 /*! exports provided: state */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"state\", function() { return state; });\nvar state = {\n  currentSearch: \"\",\n  recipeArray: []\n};\n\n\n//# sourceURL=webpack:///./src/js/models/state.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"state\", function() { return state; });\nvar state = {\n  currentSearch: \"\",\n  recipeArray: []\n};\n\n\n//# sourceURL=webpack:///./src/js/state.js?");
+
+/***/ }),
+
+/***/ "./src/js/views/_baseView.js":
+/*!***********************************!*\
+  !*** ./src/js/views/_baseView.js ***!
+  \***********************************/
+/*! exports provided: baseView */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"baseView\", function() { return baseView; });\n/* harmony import */ var _models_model__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../models/model */ \"./src/js/models/model.js\");\n/* harmony import */ var _elements__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../elements */ \"./src/js/elements.js\");\n/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../state */ \"./src/js/state.js\");\n\n\n\nvar baseView = {\n  renderLoader: function renderLoader(parent) {\n    var loader = \"\\n            <div class=\\\"loader\\\">\\n                <svg>\\n                    <use href=\\\"img/icons.svg#icon-cw\\\"></use>\\n                </svg>\\n            </div>\\n        \";\n    parent.insertAdjacentHTML(\"afterbegin\", loader);\n  }\n};\n\n\n//# sourceURL=webpack:///./src/js/views/_baseView.js?");
+
+/***/ }),
+
+/***/ "./src/js/views/_searchView.js":
+/*!*************************************!*\
+  !*** ./src/js/views/_searchView.js ***!
+  \*************************************/
+/*! exports provided: searchView */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"searchView\", function() { return searchView; });\n/* harmony import */ var _models_model__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../models/model */ \"./src/js/models/model.js\");\n/* harmony import */ var _elements__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../elements */ \"./src/js/elements.js\");\n/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../state */ \"./src/js/state.js\");\n\n\n\nvar searchView = (function (MDL, elements, state) {\n  var limitRecipeTitle = function limitRecipeTitle(title) {\n    var limit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 17;\n\n    if (title.length > limit) {\n      var titleArr = title.split(\" \");\n      var titleStr = titleArr.reduce(function (total, item, index) {\n        if (total.length + item.length <= limit) {\n          return \"\".concat(total, \" \").concat(item);\n        }\n\n        return total;\n      }, \"\");\n      return titleStr + \"...\";\n    }\n\n    return title;\n  };\n\n  var clearInput = function clearInput() {\n    elements.searchInput.value = \"\";\n  };\n\n  var clearResults = function clearResults() {\n    elements.searchResList.innerHTML = \"\";\n  };\n\n  var renderResults = function renderResults() {\n    state.recipeArray.map(function (item, index, arr) {\n      return \"\\n                    <li>\\n                        <a class=\\\"results__link results__link--active\\\" href=\\\"#\".concat(item.recipe_id, \"\\\">\\n                            <figure class=\\\"results__fig\\\">\\n                                <img src=\\\"\").concat(item.image_url, \"\\\" alt=\\\"Test\\\">\\n                            </figure>\\n                            <div class=\\\"results__data\\\">\\n                                <h4 class=\\\"results__name\\\">\").concat(limitRecipeTitle(item.title), \"</h4>\\n                                <p class=\\\"results__author\\\">\").concat(item.publisher, \"</p>\\n                            </div>\\n                        </a>\\n                    </li>\\n                \");\n    }).forEach(function (item, index, array) {\n      elements.searchResList.insertAdjacentHTML(\"beforeend\", item);\n    });\n  };\n\n  return {\n    clearInput: clearInput,\n    clearResults: clearResults,\n    renderResults: renderResults\n  };\n}, (_models_model__WEBPACK_IMPORTED_MODULE_0__[\"MDL\"], _elements__WEBPACK_IMPORTED_MODULE_1__[\"elements\"], _state__WEBPACK_IMPORTED_MODULE_2__[\"state\"]));\n\n\n//# sourceURL=webpack:///./src/js/views/_searchView.js?");
 
 /***/ }),
 
@@ -4216,7 +4240,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"VIEW\", function() { return VIEW; });\n/* harmony import */ var _models_model__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../models/model */ \"./src/js/models/model.js\");\n/* harmony import */ var _elements__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../elements */ \"./src/js/elements.js\");\n\n\nvar state = _models_model__WEBPACK_IMPORTED_MODULE_0__[\"MDL\"].state;\nvar VIEW = {\n  limitRecipeTitle: function limitRecipeTitle(title) {\n    var limit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 17;\n\n    if (title.length > limit) {\n      var titleArr = title.split(\" \");\n      var titleStr = titleArr.reduce(function (total, item, index) {\n        if (total.length + item.length <= limit) {\n          return \"\".concat(total, \" \").concat(item);\n        }\n\n        return total;\n      }, \"\");\n      return titleStr + \"...\";\n    }\n\n    return title;\n  },\n  clearInput: function clearInput() {\n    _elements__WEBPACK_IMPORTED_MODULE_1__[\"elements\"].searchInput.value = \"\";\n  },\n  clearResults: function clearResults() {\n    _elements__WEBPACK_IMPORTED_MODULE_1__[\"elements\"].searchResList.innerHTML = \"\";\n  },\n  renderResults: function renderResults() {\n    var _this = this;\n\n    state.recipeArray.map(function (item, index, arr) {\n      return \"\\n                    <li>\\n                        <a class=\\\"results__link results__link--active\\\" href=\\\"#\".concat(item.recipe_id, \"\\\">\\n                            <figure class=\\\"results__fig\\\">\\n                                <img src=\\\"\").concat(item.image_url, \"\\\" alt=\\\"Test\\\">\\n                            </figure>\\n                            <div class=\\\"results__data\\\">\\n                                <h4 class=\\\"results__name\\\">\").concat(_this.limitRecipeTitle(item.title), \"</h4>\\n                                <p class=\\\"results__author\\\">\").concat(item.publisher, \"</p>\\n                            </div>\\n                        </a>\\n                    </li>\\n                \");\n    }).forEach(function (item, index, array) {\n      _elements__WEBPACK_IMPORTED_MODULE_1__[\"elements\"].searchResList.insertAdjacentHTML(\"beforeend\", item);\n    });\n  }\n};\n\n\n//# sourceURL=webpack:///./src/js/views/view.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"VIEW\", function() { return VIEW; });\n/* harmony import */ var _searchView__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_searchView */ \"./src/js/views/_searchView.js\");\n/* harmony import */ var _baseView__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_baseView */ \"./src/js/views/_baseView.js\");\nfunction _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }\n\nfunction _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }\n\n\n\n\nvar VIEW = _objectSpread({}, _baseView__WEBPACK_IMPORTED_MODULE_1__[\"baseView\"], _searchView__WEBPACK_IMPORTED_MODULE_0__[\"searchView\"]);\n\n\n\n//# sourceURL=webpack:///./src/js/views/view.js?");
 
 /***/ }),
 

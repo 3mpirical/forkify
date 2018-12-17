@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const search = (function() {
+const searchModel = (function() {
 
     const getResults = (searchParam) => {
         return new Promise((resolve,reject) => {
@@ -30,4 +30,4 @@ const search = (function() {
 } () );
 
 
-export { search };
+export { searchModel };

@@ -3,23 +3,19 @@
 import { VIEW } from "./views/view.js";
 import { MDL } from "./models/model.js";
 import { elements } from "./elements.js";
-let state = MDL.state;
+import { state } from "./state";
 
 
 const CTRL = (function() {
 
     const getRecipesAndRender = () => {
         return new Promise((resolve, reject) => {
-            //prepare UI for results
-            //execute search
-            //render results to ui
 
             state.currentSearch = elements.searchInput.value;
-            // console.log(state.currentSearch); //log search
+            VIEW.renderLoader(elements.searchResList);
 
-            MDL.search.getResults(state.currentSearch)
+            MDL.getResults(state.currentSearch)
             .then((recipeData) => {
-                // console.log(recipeData.data);//log results
                 state.recipeArray = recipeData.data;
                 VIEW.clearResults();
                 VIEW.renderResults();

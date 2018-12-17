@@ -1,10 +1,8 @@
-import { search } from "./search.js";
-import { state } from "./state.js";
+import { searchModel } from "./_searchModel.js";
 
 
 const MDL = {
-    state: state,
-    search: search,
+    ...searchModel,
 };
 
 

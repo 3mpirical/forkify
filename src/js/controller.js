@@ -12,12 +12,13 @@ const CTRL = (function() {
         return new Promise((resolve, reject) => {
 
             state.currentSearch = elements.searchInput.value;
+            VIEW.clearResults();
             VIEW.renderLoader(elements.searchResList);
 
             MDL.getResults(state.currentSearch)
             .then((recipeData) => {
                 state.recipeArray = recipeData.data;
-                VIEW.clearResults();
+                VIEW.clearLoader();
                 VIEW.renderResults();
                 VIEW.clearInput();
             })
@@ -39,9 +40,6 @@ elements.searchForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
     CTRL.getRecipesAndRender()
-    .then(() => {
-
-    })
     .catch((err) => {
         console.log(err);
     });

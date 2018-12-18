@@ -15,6 +15,11 @@ const baseView = {
         parent.insertAdjacentHTML("afterbegin", loader);
     },
 
+    clearLoader: () => {
+        const loader = elements.loader();
+        if(loader) loader.parentElement.removeChild(loader);
+    },
+
 };
 
 export { baseView };

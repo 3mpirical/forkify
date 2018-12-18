@@ -16,7 +16,7 @@ router.get("/api/search-food/:food", (req, res) => {
             res.status(404)
                 .json({
                     isSuccessful: false,
-                    responseText: "data not found",
+                    responseText: "no content",
                     data: null,
                 });
         } else {

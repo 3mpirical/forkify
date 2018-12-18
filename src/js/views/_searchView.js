@@ -57,7 +57,7 @@ const searchView = (function(MDL, elements, state) {
         renderResults,
     };
 
-}, (MDL, elements, state) );
+} (MDL, elements, state) );
 
 
 export { searchView };
